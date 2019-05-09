@@ -257,30 +257,4 @@ public class ThreadPool {
 	public <T> Future<T> submit(Callable<T> call) {
 		return submit(call, UserPriority.DEFAULT);
 	}
-	
-	public static void main(String[] args) {
-        int i = 0;
-
-        while (i < 10) {
-            ThreadPool tp = new ThreadPool(2);
-
-            tp.submit(() -> {
-                System.out.println("hello Regular priority");
-                return 0;
-            });
-            tp.submit(() -> {
-                System.out.println("hello Max priority");
-                return 0;
-            }, UserPriority.MAX);
-
-            ++i;
-            tp.executePool();
-            tp.shutdown();
-            try {
-                tp.awaitTermination(3, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
